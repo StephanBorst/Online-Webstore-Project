@@ -1,70 +1,73 @@
 package Producten;
 
 public class DefaultProduct extends Product {
-	
+
 	// ============== Instance variabelen ====================
 	private String naam;
-	private int prijs;
+	private double prijs;
 	private int voorraad;
 	private int eenheid;
-	
-	// ==============       Contructors    ===================
-	public DefaultProduct(String naam, int prijs, int voorraad, int eenheid){
+
+	// ============== Contructors ===================
+	public DefaultProduct(String naam, double prijs, int voorraad, int eenheid) {
 		this.naam = naam;
 		this.prijs = prijs;
 		this.voorraad = voorraad;
 		this.eenheid = eenheid;
 	}
-	
-	public DefaultProduct(String naam, int prijs, int voorraad){
+
+	public DefaultProduct(String naam, double prijs, int voorraad) {
 		this(naam, prijs, voorraad, 4);
 	}
+
 	@Override
 	public String toString() {
-	StringBuilder sb = new StringBuilder();
-	sb.append(naam).append(" Eenheid: ").append(eenheid).append(" Voorraad: ").append(voorraad);
-	return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(naam).append(", ").append(prijs).append(" euro per ").append(Product.getEenheidNaam(this.eenheid)).append(", Voorraad: ").append(voorraad);
+		return sb.toString();
 	}
-	
-	
-	
-	// =======  Getters =====================
+
+	// ======= Getters =====================
 	@Override
-	public int getPrijs(int hoeveelheid, boolean inclusief) {
-		int basis;
-		int prijs;
-		basis = hoeveelheid * this.getPrijsPerEenheid();
-		
-		if(inclusief == true){
-			prijs = basis + basis*(this.getBTWPercentage()/100);
+	public double getPrijs(int hoeveelheid, boolean inclusief) {
+		double basis;
+		double prijs;
+		basis = (double) hoeveelheid * this.getPrijsPerEenheid();
+
+		if (inclusief == true) {
+			prijs = basis*getPrijsPerEenheid()/100 + basis;
+		} else {
+			prijs = basis;
 		}
-		else{prijs = basis;}
 		return prijs;
 	}
 
-	public int getPrijs(int hoeveelheid){
-		int prijs = hoeveelheid * this.getPrijsPerEenheid() * (1+this.getBTWPercentage()/100);
+	public double getPrijs(int hoeveelheid) {
+		double prijs = hoeveelheid * getPrijsPerEenheid() * (1 + getBTWPercentage() / 100);
 		return prijs;
 	}
-	public int getPrijs(){
+
+	public double getPrijs() {
 		return this.getPrijsPerEenheid();
 	}
-	
-	public int getPrijsPerEenheid(){
-		this.prijs = 100;
-		return this.prijs;
+
+	public double getPrijsPerEenheid() {
+		return prijs;
 	}
-	public int getBTWPercentage(){
-		int btwPercentage = 21;
-		return btwPercentage;
+
+	public static int getBTWPercentage() {
+		return 21;
 	}
-	public String getNaam(){
+
+	public String getNaam() {
 		return naam;
 	}
-	public int getEenheid(){
+
+	public int getEenheid() {
 		return eenheid;
 	}
-	public final int getVoorraad(){
+
+	public final int getVoorraad() {
 		return voorraad;
 	}
 
@@ -78,8 +81,5 @@ public class DefaultProduct extends Product {
 	public void haalUitVoorraad(int aantal) {
 		this.voorraad = this.voorraad - aantal;
 	}
-
-	
-	
 
 }

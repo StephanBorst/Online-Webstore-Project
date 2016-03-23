@@ -1,14 +1,13 @@
 package Bestelling;
 
-import Producten.DefaultProduct;
 import Producten.Product;
 
 public class ProductBestelling {
 	
-	private DefaultProduct product;
+	private Product product;
 	private int hoeveelheid;
 	
-	public ProductBestelling(int hoeveelheid, DefaultProduct product){
+	ProductBestelling(int hoeveelheid, Product product){
 		this.hoeveelheid = hoeveelheid;
 		this.product = product;
 	}
@@ -16,13 +15,15 @@ public class ProductBestelling {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Product: ")
-		.append(this.getProductnaam(product))
-		.append(" Hoeveelheid: ")
-		.append(hoeveelheid);
+		.append(this.getProductnaam())
+		.append(", Aantal: ")
+		.append(hoeveelheid)
+		.append(", Prijs(Excl): ")
+		.append(getPrijs(false));
 		return sb.toString();
 	}
-	public int getPrijs(boolean inclusief){
-		int totaalprijs;
+	double getPrijs(boolean inclusief){
+		double totaalprijs;
 		if(inclusief == true){
 			totaalprijs = product.getPrijs(this.hoeveelheid, true);
 		}
@@ -31,8 +32,11 @@ public class ProductBestelling {
 		}
 		return totaalprijs;
 	}
-	public String getProductnaam(DefaultProduct obj){
-		return obj.getNaam();
+	public String getProductnaam(){
+		return product.getNaam();
+	}
+	public Product getProduct(){
+		return product;
 	}
 	public int getHoeveelheid() {
 		return hoeveelheid;
