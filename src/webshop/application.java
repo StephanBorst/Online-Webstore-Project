@@ -23,7 +23,6 @@ public class application {
 		int bestellingcount = 0;
 		Scanner s = new Scanner(System.in);
 		
-		
 		//====== Overzicht Producten ===============
 		ArrayList<Product> lijstProducten = new ArrayList<Product>();
 		lijstProducten.add(product1);
